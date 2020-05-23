@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:linkbalanco2/app/modules/home/home_controller.dart';
+import 'package:linkbalanco2/app/modules/home/model/item_model.dart';
 import 'package:linkbalanco2/app/widgets/adicionar_diminuir/adicionar_diminuir_qtd.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 import 'package:vibration/vibration.dart';
@@ -10,6 +13,11 @@ class LeituraCameraWidget extends StatefulWidget {
 }
 
 class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
+
+  HomeController controller = Modular.get<HomeController>();
+  String ultimoCodigoBarrasLido;
+  int qtdCodigobarrasLido = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +32,12 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
                 qrCodeCallback: (code) {
                   Vibration.vibrate();
                   print(code);
+
+                  var a = ItemModel(codigoBarra: code, qtd: 1);
+
+                  controller.adicionarItem(a);
+                  qtdCodigobarrasLido++;
+
                   Vibration.cancel();
                 },
               ),
@@ -36,7 +50,7 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
                 color: Color.fromARGB(100, 0, 0, 0),
                 child: Center(
                   child: Text(
-                    "Último código de barras lido: \n7898035890023",
+                    "Último código de barras lido: ${ultimoCodigoBarrasLido.isNotEmpty ? ultimoCodigoBarrasLido : ''}",
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                     textAlign: TextAlign.center,
                   ),
@@ -59,7 +73,7 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
                   children: <Widget>[
                     Center(
                       child: Text(
-                        "Quantidade de códigos lidos: 1",
+                        "Quantidade de códigos lidos: $qtdCodigobarrasLido",
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
                       ),
                     ),
