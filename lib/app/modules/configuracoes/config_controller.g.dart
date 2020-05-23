@@ -13,24 +13,23 @@ mixin _$ConfigController on _ConfigControllerBase, Store {
 
   @override
   bool get camposValidos =>
-      (_$camposValidosComputed ??= Computed<bool>(() => super.camposValidos))
+      (_$camposValidosComputed ??= Computed<bool>(() => super.camposValidos,
+              name: '_ConfigControllerBase.camposValidos'))
           .value;
 
   final _$configAtom = Atom(name: '_ConfigControllerBase.config');
 
   @override
   ConfigModel get config {
-    _$configAtom.context.enforceReadPolicy(_$configAtom);
-    _$configAtom.reportObserved();
+    _$configAtom.reportRead();
     return super.config;
   }
 
   @override
   set config(ConfigModel value) {
-    _$configAtom.context.conditionallyRunInAction(() {
+    _$configAtom.reportWrite(value, super.config, () {
       super.config = value;
-      _$configAtom.reportChanged();
-    }, _$configAtom, name: '${_$configAtom.name}_set');
+    });
   }
 
   final _$conexaoLinkLodingAtom =
@@ -38,27 +37,26 @@ mixin _$ConfigController on _ConfigControllerBase, Store {
 
   @override
   bool get conexaoLinkLoding {
-    _$conexaoLinkLodingAtom.context.enforceReadPolicy(_$conexaoLinkLodingAtom);
-    _$conexaoLinkLodingAtom.reportObserved();
+    _$conexaoLinkLodingAtom.reportRead();
     return super.conexaoLinkLoding;
   }
 
   @override
   set conexaoLinkLoding(bool value) {
-    _$conexaoLinkLodingAtom.context.conditionallyRunInAction(() {
+    _$conexaoLinkLodingAtom.reportWrite(value, super.conexaoLinkLoding, () {
       super.conexaoLinkLoding = value;
-      _$conexaoLinkLodingAtom.reportChanged();
-    }, _$conexaoLinkLodingAtom, name: '${_$conexaoLinkLodingAtom.name}_set');
+    });
   }
 
-  final _$setConfigAsyncAction = AsyncAction('setConfig');
+  final _$setConfigAsyncAction = AsyncAction('_ConfigControllerBase.setConfig');
 
   @override
   Future<bool> setConfig() {
     return _$setConfigAsyncAction.run(() => super.setConfig());
   }
 
-  final _$testarConexaoAsyncAction = AsyncAction('testarConexao');
+  final _$testarConexaoAsyncAction =
+      AsyncAction('_ConfigControllerBase.testarConexao');
 
   @override
   Future<bool> testarConexao(BuildContext context) {
@@ -67,8 +65,10 @@ mixin _$ConfigController on _ConfigControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'config: ${config.toString()},conexaoLinkLoding: ${conexaoLinkLoding.toString()},camposValidos: ${camposValidos.toString()}';
-    return '{$string}';
+    return '''
+config: ${config},
+conexaoLinkLoding: ${conexaoLinkLoding},
+camposValidos: ${camposValidos}
+    ''';
   }
 }

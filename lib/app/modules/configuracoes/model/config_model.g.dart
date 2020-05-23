@@ -49,68 +49,67 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   bool get servidorValido =>
-      (_$servidorValidoComputed ??= Computed<bool>(() => super.servidorValido))
+      (_$servidorValidoComputed ??= Computed<bool>(() => super.servidorValido,
+              name: '_ConfigModelBase.servidorValido'))
           .value;
   Computed<bool> _$portaValidaComputed;
 
   @override
   bool get portaValida =>
-      (_$portaValidaComputed ??= Computed<bool>(() => super.portaValida)).value;
+      (_$portaValidaComputed ??= Computed<bool>(() => super.portaValida,
+              name: '_ConfigModelBase.portaValida'))
+          .value;
   Computed<bool> _$senhaValidaComputed;
 
   @override
   bool get senhaValida =>
-      (_$senhaValidaComputed ??= Computed<bool>(() => super.senhaValida)).value;
+      (_$senhaValidaComputed ??= Computed<bool>(() => super.senhaValida,
+              name: '_ConfigModelBase.senhaValida'))
+          .value;
 
   final _$servidorAtom = Atom(name: '_ConfigModelBase.servidor');
 
   @override
   String get servidor {
-    _$servidorAtom.context.enforceReadPolicy(_$servidorAtom);
-    _$servidorAtom.reportObserved();
+    _$servidorAtom.reportRead();
     return super.servidor;
   }
 
   @override
   set servidor(String value) {
-    _$servidorAtom.context.conditionallyRunInAction(() {
+    _$servidorAtom.reportWrite(value, super.servidor, () {
       super.servidor = value;
-      _$servidorAtom.reportChanged();
-    }, _$servidorAtom, name: '${_$servidorAtom.name}_set');
+    });
   }
 
   final _$portaAtom = Atom(name: '_ConfigModelBase.porta');
 
   @override
   int get porta {
-    _$portaAtom.context.enforceReadPolicy(_$portaAtom);
-    _$portaAtom.reportObserved();
+    _$portaAtom.reportRead();
     return super.porta;
   }
 
   @override
   set porta(int value) {
-    _$portaAtom.context.conditionallyRunInAction(() {
+    _$portaAtom.reportWrite(value, super.porta, () {
       super.porta = value;
-      _$portaAtom.reportChanged();
-    }, _$portaAtom, name: '${_$portaAtom.name}_set');
+    });
   }
 
   final _$senhaAtom = Atom(name: '_ConfigModelBase.senha');
 
   @override
   String get senha {
-    _$senhaAtom.context.enforceReadPolicy(_$senhaAtom);
-    _$senhaAtom.reportObserved();
+    _$senhaAtom.reportRead();
     return super.senha;
   }
 
   @override
   set senha(String value) {
-    _$senhaAtom.context.conditionallyRunInAction(() {
+    _$senhaAtom.reportWrite(value, super.senha, () {
       super.senha = value;
-      _$senhaAtom.reportChanged();
-    }, _$senhaAtom, name: '${_$senhaAtom.name}_set');
+    });
   }
 
   final _$validarCodigoBarraAtom =
@@ -118,18 +117,15 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   bool get validarCodigoBarra {
-    _$validarCodigoBarraAtom.context
-        .enforceReadPolicy(_$validarCodigoBarraAtom);
-    _$validarCodigoBarraAtom.reportObserved();
+    _$validarCodigoBarraAtom.reportRead();
     return super.validarCodigoBarra;
   }
 
   @override
   set validarCodigoBarra(bool value) {
-    _$validarCodigoBarraAtom.context.conditionallyRunInAction(() {
+    _$validarCodigoBarraAtom.reportWrite(value, super.validarCodigoBarra, () {
       super.validarCodigoBarra = value;
-      _$validarCodigoBarraAtom.reportChanged();
-    }, _$validarCodigoBarraAtom, name: '${_$validarCodigoBarraAtom.name}_set');
+    });
   }
 
   final _$_ConfigModelBaseActionController =
@@ -137,7 +133,8 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   dynamic setServidor(String pServidor) {
-    final _$actionInfo = _$_ConfigModelBaseActionController.startAction();
+    final _$actionInfo = _$_ConfigModelBaseActionController.startAction(
+        name: '_ConfigModelBase.setServidor');
     try {
       return super.setServidor(pServidor);
     } finally {
@@ -147,7 +144,8 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   dynamic setPorta(int pPorta) {
-    final _$actionInfo = _$_ConfigModelBaseActionController.startAction();
+    final _$actionInfo = _$_ConfigModelBaseActionController.startAction(
+        name: '_ConfigModelBase.setPorta');
     try {
       return super.setPorta(pPorta);
     } finally {
@@ -157,7 +155,8 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   dynamic setSenha(String pSenha) {
-    final _$actionInfo = _$_ConfigModelBaseActionController.startAction();
+    final _$actionInfo = _$_ConfigModelBaseActionController.startAction(
+        name: '_ConfigModelBase.setSenha');
     try {
       return super.setSenha(pSenha);
     } finally {
@@ -167,7 +166,8 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   dynamic setValidarCodigoBarra(bool pValidarCodigoBarra) {
-    final _$actionInfo = _$_ConfigModelBaseActionController.startAction();
+    final _$actionInfo = _$_ConfigModelBaseActionController.startAction(
+        name: '_ConfigModelBase.setValidarCodigoBarra');
     try {
       return super.setValidarCodigoBarra(pValidarCodigoBarra);
     } finally {
@@ -177,8 +177,14 @@ mixin _$ConfigModel on _ConfigModelBase, Store {
 
   @override
   String toString() {
-    final string =
-        'servidor: ${servidor.toString()},porta: ${porta.toString()},senha: ${senha.toString()},validarCodigoBarra: ${validarCodigoBarra.toString()},servidorValido: ${servidorValido.toString()},portaValida: ${portaValida.toString()},senhaValida: ${senhaValida.toString()}';
-    return '{$string}';
+    return '''
+servidor: ${servidor},
+porta: ${porta},
+senha: ${senha},
+validarCodigoBarra: ${validarCodigoBarra},
+servidorValido: ${servidorValido},
+portaValida: ${portaValida},
+senhaValida: ${senhaValida}
+    ''';
   }
 }

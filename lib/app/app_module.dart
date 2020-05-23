@@ -25,8 +25,9 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers =>
       [
-        Router('/', module: SplashScreenModule()),
-        Router('${Routes.HOME_ROUTE}', module: HomeModule()),
+        //Router('/', module: SplashScreenModule()),
+        //Router('${Routes.HOME_ROUTE}', module: HomeModule()),
+        Router('/', module: HomeModule()),
         Router('${Routes.CONFIG_ROUTE}', module: ConfigModule()),
         Router('${Routes.LEITURA_CAMERA_ROUTE}', module: LeituraCameraModule()),
       ];

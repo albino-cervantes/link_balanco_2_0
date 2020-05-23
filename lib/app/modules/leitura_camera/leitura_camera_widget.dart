@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:linkbalanco2/app/widgets/adicionar_diminuir/adicionar_diminuir_qtd.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 import 'package:vibration/vibration.dart';

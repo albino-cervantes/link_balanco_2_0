@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:linkbalanco2/app/constantes/routes.dart';
 
@@ -28,6 +29,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           icon: Icon(Icons.photo_camera),
           onPressed: () {
             Modular.to.pushNamed('${Routes.LEITURA_CAMERA_ROUTE}');
+            //FlutterBarcodeScanner.scanBarcode("#ff6666", "Cancel", false, ScanMode.DEFAULT).then((value) => {});
           },
         ),
         PopupMenuButton<MenuAppBarOpcoes>(

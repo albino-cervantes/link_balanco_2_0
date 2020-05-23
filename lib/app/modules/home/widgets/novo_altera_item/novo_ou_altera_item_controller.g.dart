@@ -13,17 +13,15 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
 
   @override
   ItemModel get item {
-    _$itemAtom.context.enforceReadPolicy(_$itemAtom);
-    _$itemAtom.reportObserved();
+    _$itemAtom.reportRead();
     return super.item;
   }
 
   @override
   set item(ItemModel value) {
-    _$itemAtom.context.conditionallyRunInAction(() {
+    _$itemAtom.reportWrite(value, super.item, () {
       super.item = value;
-      _$itemAtom.reportChanged();
-    }, _$itemAtom, name: '${_$itemAtom.name}_set');
+    });
   }
 
   final _$codigoBarrasValidoAtom =
@@ -31,18 +29,15 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
 
   @override
   bool get codigoBarrasValido {
-    _$codigoBarrasValidoAtom.context
-        .enforceReadPolicy(_$codigoBarrasValidoAtom);
-    _$codigoBarrasValidoAtom.reportObserved();
+    _$codigoBarrasValidoAtom.reportRead();
     return super.codigoBarrasValido;
   }
 
   @override
   set codigoBarrasValido(bool value) {
-    _$codigoBarrasValidoAtom.context.conditionallyRunInAction(() {
+    _$codigoBarrasValidoAtom.reportWrite(value, super.codigoBarrasValido, () {
       super.codigoBarrasValido = value;
-      _$codigoBarrasValidoAtom.reportChanged();
-    }, _$codigoBarrasValidoAtom, name: '${_$codigoBarrasValidoAtom.name}_set');
+    });
   }
 
   final _$statusNovoAtom =
@@ -50,17 +45,15 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
 
   @override
   bool get statusNovo {
-    _$statusNovoAtom.context.enforceReadPolicy(_$statusNovoAtom);
-    _$statusNovoAtom.reportObserved();
+    _$statusNovoAtom.reportRead();
     return super.statusNovo;
   }
 
   @override
   set statusNovo(bool value) {
-    _$statusNovoAtom.context.conditionallyRunInAction(() {
+    _$statusNovoAtom.reportWrite(value, super.statusNovo, () {
       super.statusNovo = value;
-      _$statusNovoAtom.reportChanged();
-    }, _$statusNovoAtom, name: '${_$statusNovoAtom.name}_set');
+    });
   }
 
   final _$_NovoOuAlteraItemControllerBaseActionController =
@@ -69,7 +62,9 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
   @override
   dynamic validarCodigoBarrasDigitado(String pCodigoBarra) {
     final _$actionInfo =
-        _$_NovoOuAlteraItemControllerBaseActionController.startAction();
+        _$_NovoOuAlteraItemControllerBaseActionController.startAction(
+            name:
+                '_NovoOuAlteraItemControllerBase.validarCodigoBarrasDigitado');
     try {
       return super.validarCodigoBarrasDigitado(pCodigoBarra);
     } finally {
@@ -79,8 +74,8 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
 
   @override
   dynamic setItemModel(ItemModel pItem) {
-    final _$actionInfo =
-        _$_NovoOuAlteraItemControllerBaseActionController.startAction();
+    final _$actionInfo = _$_NovoOuAlteraItemControllerBaseActionController
+        .startAction(name: '_NovoOuAlteraItemControllerBase.setItemModel');
     try {
       return super.setItemModel(pItem);
     } finally {
@@ -90,8 +85,10 @@ mixin _$NovoOuAlteraItemController on _NovoOuAlteraItemControllerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'item: ${item.toString()},codigoBarrasValido: ${codigoBarrasValido.toString()},statusNovo: ${statusNovo.toString()}';
-    return '{$string}';
+    return '''
+item: ${item},
+codigoBarrasValido: ${codigoBarrasValido},
+statusNovo: ${statusNovo}
+    ''';
   }
 }

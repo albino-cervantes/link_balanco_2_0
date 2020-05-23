@@ -49,86 +49,82 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   String get dataHoraLeituraDisplay => (_$dataHoraLeituraDisplayComputed ??=
-          Computed<String>(() => super.dataHoraLeituraDisplay))
+          Computed<String>(() => super.dataHoraLeituraDisplay,
+              name: '_ItemModelBase.dataHoraLeituraDisplay'))
       .value;
   Computed<bool> _$codigoBarraValidoComputed;
 
   @override
-  bool get codigoBarraValido => (_$codigoBarraValidoComputed ??=
-          Computed<bool>(() => super.codigoBarraValido))
+  bool get codigoBarraValido => (_$codigoBarraValidoComputed ??= Computed<bool>(
+          () => super.codigoBarraValido,
+          name: '_ItemModelBase.codigoBarraValido'))
       .value;
   Computed<bool> _$qtdValidaComputed;
 
   @override
   bool get qtdValida =>
-      (_$qtdValidaComputed ??= Computed<bool>(() => super.qtdValida)).value;
+      (_$qtdValidaComputed ??= Computed<bool>(() => super.qtdValida,
+              name: '_ItemModelBase.qtdValida'))
+          .value;
 
   final _$codigoBarraAtom = Atom(name: '_ItemModelBase.codigoBarra');
 
   @override
   String get codigoBarra {
-    _$codigoBarraAtom.context.enforceReadPolicy(_$codigoBarraAtom);
-    _$codigoBarraAtom.reportObserved();
+    _$codigoBarraAtom.reportRead();
     return super.codigoBarra;
   }
 
   @override
   set codigoBarra(String value) {
-    _$codigoBarraAtom.context.conditionallyRunInAction(() {
+    _$codigoBarraAtom.reportWrite(value, super.codigoBarra, () {
       super.codigoBarra = value;
-      _$codigoBarraAtom.reportChanged();
-    }, _$codigoBarraAtom, name: '${_$codigoBarraAtom.name}_set');
+    });
   }
 
   final _$qtdAtom = Atom(name: '_ItemModelBase.qtd');
 
   @override
   double get qtd {
-    _$qtdAtom.context.enforceReadPolicy(_$qtdAtom);
-    _$qtdAtom.reportObserved();
+    _$qtdAtom.reportRead();
     return super.qtd;
   }
 
   @override
   set qtd(double value) {
-    _$qtdAtom.context.conditionallyRunInAction(() {
+    _$qtdAtom.reportWrite(value, super.qtd, () {
       super.qtd = value;
-      _$qtdAtom.reportChanged();
-    }, _$qtdAtom, name: '${_$qtdAtom.name}_set');
+    });
   }
 
   final _$dataHoraLeituraAtom = Atom(name: '_ItemModelBase.dataHoraLeitura');
 
   @override
   DateTime get dataHoraLeitura {
-    _$dataHoraLeituraAtom.context.enforceReadPolicy(_$dataHoraLeituraAtom);
-    _$dataHoraLeituraAtom.reportObserved();
+    _$dataHoraLeituraAtom.reportRead();
     return super.dataHoraLeitura;
   }
 
   @override
   set dataHoraLeitura(DateTime value) {
-    _$dataHoraLeituraAtom.context.conditionallyRunInAction(() {
+    _$dataHoraLeituraAtom.reportWrite(value, super.dataHoraLeitura, () {
       super.dataHoraLeitura = value;
-      _$dataHoraLeituraAtom.reportChanged();
-    }, _$dataHoraLeituraAtom, name: '${_$dataHoraLeituraAtom.name}_set');
+    });
   }
 
   final _$descricaoAtom = Atom(name: '_ItemModelBase.descricao');
 
   @override
   String get descricao {
-    _$descricaoAtom.context.enforceReadPolicy(_$descricaoAtom);
-    _$descricaoAtom.reportObserved();
+    _$descricaoAtom.reportRead();
     return super.descricao;
   }
 
   @override
   set descricao(String value) {
-    _$descricaoAtom.context.conditionallyRunInAction(() {
+    _$descricaoAtom.reportWrite(value, super.descricao, () {
       super.descricao = value;
-      _$descricaoAtom.reportChanged();
-    }, _$descricaoAtom, name: '${_$descricaoAtom.name}_set');
+    });
   }
 
   final _$_ItemModelBaseActionController =
@@ -136,7 +132,8 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   dynamic setcodigoBarra(String pCodigoBarra) {
-    final _$actionInfo = _$_ItemModelBaseActionController.startAction();
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.setcodigoBarra');
     try {
       return super.setcodigoBarra(pCodigoBarra);
     } finally {
@@ -146,7 +143,8 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   dynamic setqtd(double pQtd) {
-    final _$actionInfo = _$_ItemModelBaseActionController.startAction();
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.setqtd');
     try {
       return super.setqtd(pQtd);
     } finally {
@@ -156,7 +154,8 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   dynamic setDataHoraLeitura(DateTime pDataHoraLeitura) {
-    final _$actionInfo = _$_ItemModelBaseActionController.startAction();
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.setDataHoraLeitura');
     try {
       return super.setDataHoraLeitura(pDataHoraLeitura);
     } finally {
@@ -166,7 +165,8 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   dynamic setDescricao(String pDescricao) {
-    final _$actionInfo = _$_ItemModelBaseActionController.startAction();
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.setDescricao');
     try {
       return super.setDescricao(pDescricao);
     } finally {
@@ -176,8 +176,14 @@ mixin _$ItemModel on _ItemModelBase, Store {
 
   @override
   String toString() {
-    final string =
-        'codigoBarra: ${codigoBarra.toString()},qtd: ${qtd.toString()},dataHoraLeitura: ${dataHoraLeitura.toString()},descricao: ${descricao.toString()},dataHoraLeituraDisplay: ${dataHoraLeituraDisplay.toString()},codigoBarraValido: ${codigoBarraValido.toString()},qtdValida: ${qtdValida.toString()}';
-    return '{$string}';
+    return '''
+codigoBarra: ${codigoBarra},
+qtd: ${qtd},
+dataHoraLeitura: ${dataHoraLeitura},
+descricao: ${descricao},
+dataHoraLeituraDisplay: ${dataHoraLeituraDisplay},
+codigoBarraValido: ${codigoBarraValido},
+qtdValida: ${qtdValida}
+    ''';
   }
 }

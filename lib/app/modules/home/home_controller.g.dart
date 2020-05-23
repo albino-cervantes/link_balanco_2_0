@@ -14,19 +14,16 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   int get indexItemSelecionado {
-    _$indexItemSelecionadoAtom.context
-        .enforceReadPolicy(_$indexItemSelecionadoAtom);
-    _$indexItemSelecionadoAtom.reportObserved();
+    _$indexItemSelecionadoAtom.reportRead();
     return super.indexItemSelecionado;
   }
 
   @override
   set indexItemSelecionado(int value) {
-    _$indexItemSelecionadoAtom.context.conditionallyRunInAction(() {
+    _$indexItemSelecionadoAtom.reportWrite(value, super.indexItemSelecionado,
+        () {
       super.indexItemSelecionado = value;
-      _$indexItemSelecionadoAtom.reportChanged();
-    }, _$indexItemSelecionadoAtom,
-        name: '${_$indexItemSelecionadoAtom.name}_set');
+    });
   }
 
   final _$_HomeControllerBaseActionController =
@@ -34,7 +31,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   dynamic setIndexItemSelecionado(int pIndex) {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.setIndexItemSelecionado');
     try {
       return super.setIndexItemSelecionado(pIndex);
     } finally {
@@ -44,7 +42,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   dynamic adicionarItem(ItemModel pItem) {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction();
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.adicionarItem');
     try {
       return super.adicionarItem(pItem);
     } finally {
@@ -54,7 +53,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'indexItemSelecionado: ${indexItemSelecionado.toString()}';
-    return '{$string}';
+    return '''
+indexItemSelecionado: ${indexItemSelecionado}
+    ''';
   }
 }
