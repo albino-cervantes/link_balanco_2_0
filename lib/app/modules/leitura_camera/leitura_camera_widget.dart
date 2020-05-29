@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -17,6 +19,7 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
   HomeController controller = Modular.get<HomeController>();
   String ultimoCodigoBarrasLido;
   int qtdCodigobarrasLido = 0;
+  Timer _timer;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +33,9 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
               child: QrCamera(
                 fit: BoxFit.cover,
                 qrCodeCallback: (code) {
-                  Vibration.vibrate();
-                  print(code);
 
-                  var a = ItemModel(codigoBarra: code, qtd: 1);
+                  !(_timer?.isActive ?? false) ? trataLeituraCodigoBarra(code) : null;
 
-                  controller.adicionarItem(a);
-                  qtdCodigobarrasLido++;
-
-                  Vibration.cancel();
                 },
               ),
             ),
@@ -50,7 +47,7 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
                 color: Color.fromARGB(100, 0, 0, 0),
                 child: Center(
                   child: Text(
-                    "Último código de barras lido: ${ultimoCodigoBarrasLido.isNotEmpty ? ultimoCodigoBarrasLido : ''}",
+                    "Último código de barras lido: ${(ultimoCodigoBarrasLido?.isNotEmpty ?? false) ? ultimoCodigoBarrasLido : ''}",
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                     textAlign: TextAlign.center,
                   ),
@@ -105,5 +102,16 @@ class _LeituraCameraWidgetState extends State<LeituraCameraWidget> {
         ),
       ),
     );;
+  }
+
+  trataLeituraCodigoBarra(String code) {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {timer.cancel();});
+
+    var a = ItemModel(codigoBarra: code, qtd: 1);
+    controller.adicionarItem(a);
+    setState(() {
+      qtdCodigobarrasLido++;
+      ultimoCodigoBarrasLido = code;
+    });
   }
 }
